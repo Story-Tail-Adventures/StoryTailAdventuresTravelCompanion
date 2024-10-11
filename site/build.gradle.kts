@@ -19,7 +19,7 @@ kobweb {
 }
 
 kotlin {
-    configAsKobwebApplication("testempty", includeServer = true)
+    configAsKobwebApplication("storytail-adventures-travel-companion", includeServer = true)
 
     sourceSets {
         commonMain.dependencies {
