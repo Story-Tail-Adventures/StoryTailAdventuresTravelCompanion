@@ -1,0 +1,12 @@
+2024-10-11 16:00:49.050 [main] DEBUG ktor.application - Java Home: /Users/gyasistory/Library/Java/JavaVirtualMachines/jbr-21.0.4/Contents
+2024-10-11 16:00:49.051 [main] DEBUG ktor.application - Class Loader: jdk.internal.loader.ClassLoaders$AppClassLoader@e2144e4: [file:/Users/gyasistory/AndroidStudioProjects/StoryTailAdventuresTravelCompanion/site/.kobweb/server/server.jar!/okio]
+2024-10-11 16:00:49.061 [main] INFO  ktor.application - API jar found and will be loaded: "build/libs/testempty.jar"
+2024-10-11 16:00:49.087 [main] INFO  ktor.application - Loaded and initialized server API jar in 2ms.
+2024-10-11 16:00:49.097 [main] INFO  ktor.application - Initializing Kobweb streams.
+2024-10-11 16:00:49.117 [main] INFO  ktor.application - Application started in 0.098 seconds.
+2024-10-11 16:00:49.179 [main] INFO  ktor.application - Responding at http://0.0.0.0:8080
+2024-10-11 16:01:01.657 [eventLoopGroupProxy-4-2] DEBUG ktor.application - Served fallback index.html file in response to "/"
+2024-10-11 16:01:02.109 [eventLoopGroupProxy-4-2] DEBUG ktor.application - Client connected and is requesting kobweb status events.
+2024-10-11 16:02:16.429 [eventLoopGroupProxy-4-3] DEBUG ktor.application - Served fallback index.html file in response to "/"
+2024-10-11 16:02:16.824 [eventLoopGroupProxy-4-3] DEBUG ktor.application - Client connected and is requesting kobweb status events.
+2024-10-11 16:02:16.865 [eventLoopGroupProxy-4-2] DEBUG ktor.application - Stopped sending kobweb status events, probably because client disconnected or server is shutting down. (ChannelWriteException: Cannot write to a channel)

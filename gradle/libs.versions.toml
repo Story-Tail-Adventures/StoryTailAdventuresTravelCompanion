@@ -1,0 +1,45 @@
+[versions]
+agp = "8.7.0"
+kotlin = "2.0.0"
+compose = "1.5.4"
+compose-material3 = "1.1.2"
+androidx-activityCompose = "1.8.0"
+
+#kobweb
+jetbrains-compose = "1.6.11"
+kobweb = "0.19.2"
+
+[libraries]
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
+compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
+
+# KobWeb
+compose-html-core = { module = "org.jetbrains.compose.html:html-core", version.ref = "jetbrains-compose" }
+compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "jetbrains-compose" }
+kobweb-api = { module = "com.varabyte.kobweb:kobweb-api", version.ref = "kobweb" }
+kobweb-core = { module = "com.varabyte.kobweb:kobweb-core ", version.ref = "kobweb" }
+kobweb-silk = { module = "com.varabyte.kobweb:kobweb-silk", version.ref = "kobweb" }
+kobweb-worker = { module = "com.varabyte.kobweb:kobweb-worker", version.ref = "kobweb" }
+kobwebx-markdown = { module = "com.varabyte.kobwebx:kobwebx-markdown", version.ref = "kobweb" }
+silk-foundation = { module = "com.varabyte.kobweb:silk-foundation", version.ref = "kobweb" }
+silk-icons-fa = { module = "com.varabyte.kobwebx:silk-icons-fa", version.ref = "kobweb" }
+silk-icons-mdi = { module = "com.varabyte.kobwebx:silk-icons-mdi", version.ref = "kobweb" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
+#kboweb
+kobweb-application = { id = "com.varabyte.kobweb.application", version.ref = "kobweb" }
+kobweb-library = { id = "com.varabyte.kobweb.library", version.ref = "kobweb" }
+kobweb-worker = { id = "com.varabyte.kobweb.worker", version.ref = "kobweb" }
+kobwebx-markdown = { id = "com.varabyte.kobwebx.markdown", version.ref = "kobweb" }
