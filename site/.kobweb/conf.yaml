@@ -1,14 +1,14 @@
 site:
-  title: "TestEmpty"
+  title: "storytail-adventures-travel-companion"
 
 server:
   files:
     dev:
       contentRoot: "build/processedResources/js/main/public"
-      script: "build/kotlin-webpack/js/developmentExecutable/testempty.js"
+      script: "build/kotlin-webpack/js/developmentExecutable/storytail-adventures-travel-companion.js"
       api: "build/libs/testempty.jar"
     prod:
-      script: "build/kotlin-webpack/js/productionExecutable/testempty.js"
+      script: "build/kotlin-webpack/js/productionExecutable/storytail-adventures-travel-companion.js"
       siteRoot: ".kobweb/site"
 
   port: 8080
