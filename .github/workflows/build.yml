@@ -1,0 +1,61 @@
+name: Build Check CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build App
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version-file: ".java-version"
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+      - name: Build App
+        run: ./gradlew assemble --scan
+
+  tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version-file: ".java-version"
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+      - name: Run Unit Tests
+        run: ./gradlew test --max-workers 1 --scan
+      - name: Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Archive Unit Test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-results
+          path: "**/build/reports/tests/"
