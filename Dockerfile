@@ -49,17 +49,17 @@ WORKDIR /project/${KOBWEB_APP_ROOT}
 # (many free Cloud tiers only give you 512M of RAM). The following amount
 # should be more than enough to build and export our site.
 RUN mkdir ~/.gradle && \
-    echo "org.gradle.jvmargs=-Xmx256m" >> ~/.gradle/gradle.properties
+    echo "org.gradle.jvmargs=-Xmx512m" >> ~/.gradle/gradle.properties
 
-RUN kobweb export --notty
+RUN kobweb run
 
 #-----------------------------------------------------------------------------
 # Create the final stage, which contains just enough bits to run the Kobweb
 # server.
-FROM java as run
+#FROM java as run
 
 #ARG KOBWEB_APP_ROOT="site"
 
-COPY --from=export /project/site/.kobweb .kobweb
+#COPY --from=export /project/site/.kobweb .kobweb
 
-ENTRYPOINT .kobweb/server/start.sh
+#ENTRYPOINT .kobweb/server/start.sh
