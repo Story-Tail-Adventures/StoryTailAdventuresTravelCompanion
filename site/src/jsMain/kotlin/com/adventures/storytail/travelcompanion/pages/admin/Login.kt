@@ -47,7 +47,7 @@ import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Button
 import org.jetbrains.compose.web.dom.Input
 
-@Page("test")
+@Page
 @Composable
 fun LoginScreen() {
 
