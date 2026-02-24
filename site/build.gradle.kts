@@ -14,13 +14,17 @@ version = version.toString()
 kobweb {
     app {
         index {
-            description.set("Powered by Kobweb")
+            description.set("Story Tail Adventures Travel Companion")
         }
     }
 }
 
 kotlin {
     configAsKobwebApplication("storytail-adventures-travel-companion", includeServer = true)
+
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
 
     sourceSets {
         commonMain.dependencies {
