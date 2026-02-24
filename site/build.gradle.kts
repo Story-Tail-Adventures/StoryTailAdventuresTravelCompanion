@@ -14,7 +14,7 @@ version = version.toString()
 kobweb {
     app {
         index {
-            description.set("Powered by Kobweb")
+            description.set("Story Tail Adventures Travel Companion")
         }
     }
 }
