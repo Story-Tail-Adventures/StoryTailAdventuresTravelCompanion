@@ -22,6 +22,10 @@ kobweb {
 kotlin {
     configAsKobwebApplication("storytail-adventures-travel-companion", includeServer = true)
 
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+
     sourceSets {
         commonMain.dependencies {
             implementation(libs.compose.runtime)

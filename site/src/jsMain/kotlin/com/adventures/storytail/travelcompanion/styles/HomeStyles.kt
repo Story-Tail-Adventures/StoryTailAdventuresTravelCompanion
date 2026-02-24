@@ -1,37 +1,36 @@
 package com.adventures.storytail.travelcompanion.styles
 
 import com.adventures.storytail.travelcompanion.models.Theme
-import com.varabyte.kobweb.compose.css.CSSTransition
-import com.varabyte.kobweb.compose.css.TransitionProperty
+import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.backgroundColor
 import com.varabyte.kobweb.compose.ui.modifiers.color
 import com.varabyte.kobweb.compose.ui.modifiers.scale
 import com.varabyte.kobweb.compose.ui.modifiers.transition
-import com.varabyte.kobweb.silk.components.style.ComponentStyle
+import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.selectors.hover
 import org.jetbrains.compose.web.css.ms
 
-val NavLinkStyle by ComponentStyle {
+val NavLinkStyle = CssStyle {
     base {
         Modifier
             .color(Colors.White)
-            .transition(CSSTransition(property = "color", duration = 300.ms))
+            .transition(Transition.of("color", 300.ms))
     }
     hover {
         Modifier.color(Theme.AccentBlue.rgb)
     }
 }
 
-val HeroCTAButtonStyle by ComponentStyle {
+val HeroCTAButtonStyle = CssStyle {
     base {
         Modifier
             .backgroundColor(Theme.LightBlue.rgb)
             .color(Theme.AccentBlue.rgb)
             .transition(
-                CSSTransition(property = "transform", duration = 300.ms),
-                CSSTransition(property = "background-color", duration = 300.ms)
+                Transition.of("transform", 300.ms),
+                Transition.of("background-color", 300.ms)
             )
     }
     hover {
@@ -41,12 +40,12 @@ val HeroCTAButtonStyle by ComponentStyle {
     }
 }
 
-val DestinationCardStyle by ComponentStyle {
+val DestinationCardStyle = CssStyle {
     base {
         Modifier
             .transition(
-                CSSTransition(property = "transform", duration = 300.ms),
-                CSSTransition(property = "box-shadow", duration = 300.ms)
+                Transition.of("transform", 300.ms),
+                Transition.of("box-shadow", 300.ms)
             )
     }
     hover {
@@ -54,11 +53,11 @@ val DestinationCardStyle by ComponentStyle {
     }
 }
 
-val FooterLinkStyle by ComponentStyle {
+val FooterLinkStyle = CssStyle {
     base {
         Modifier
             .color(Theme.TextGray.rgb)
-            .transition(CSSTransition(property = "color", duration = 300.ms))
+            .transition(Transition.of("color", 300.ms))
     }
     hover {
         Modifier.color(Colors.White)
