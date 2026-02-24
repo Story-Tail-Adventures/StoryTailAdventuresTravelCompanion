@@ -6,7 +6,7 @@ server:
     dev:
       contentRoot: "build/processedResources/js/main/public"
       script: "build/kotlin-webpack/js/developmentExecutable/storytail-adventures-travel-companion.js"
-      api: "build/libs/testempty.jar"
+      api: "build/libs/storytail-adventures-travel-companion.jar"
     prod:
       script: "build/kotlin-webpack/js/productionExecutable/storytail-adventures-travel-companion.js"
       siteRoot: ".kobweb/site"
