@@ -11,7 +11,7 @@ kobweb = "0.19.2"
 
 #KMongoDB
 mongodb-kotlin = "4.11.0"
-serialization = "1.7.1"
+serialization = "1.10.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
