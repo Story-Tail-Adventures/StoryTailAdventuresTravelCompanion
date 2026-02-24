@@ -5,7 +5,15 @@
       "Bash(./gradlew:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(brew list:*)",
+      "Bash(gh:*)",
+      "Bash(git checkout:*)",
+      "WebFetch(domain:uxpilot.ai)",
+      "Bash(pgrep:*)",
+      "Bash(jar tf:*)",
+      "Bash(jar xf:*)",
+      "Bash(grep:*)"
     ]
   }
 }
