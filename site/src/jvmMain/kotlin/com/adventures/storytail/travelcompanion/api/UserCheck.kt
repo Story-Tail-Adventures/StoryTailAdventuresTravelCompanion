@@ -1,55 +1,35 @@
 package com.adventures.storytail.travelcompanion.api
 
-import com.adventures.storytail.travelcompanion.data.MongoDB
-import com.adventures.storytail.travelcompanion.models.User
-import com.adventures.storytail.travelcompanion.models.UserWithOutPassword
+import com.adventures.storytail.travelcompanion.data.SupabaseDb
+import com.adventures.storytail.travelcompanion.models.LoginRequest
 import com.varabyte.kobweb.api.Api
 import com.varabyte.kobweb.api.ApiContext
 import com.varabyte.kobweb.api.data.getValue
 import com.varabyte.kobweb.api.http.setBodyText
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.nio.charset.StandardCharsets
-import java.security.MessageDigest
 
 @Api(routeOverride = "usercheck")
 suspend fun userCheck(context: ApiContext) {
     try {
-        val userRequest =
-            context.req.body?.decodeToString()?.let { Json.decodeFromString<User>(it) }
-        val user = userRequest?.let {
-            context.data.getValue<MongoDB>()
-                .checkUserExistence(
-                    User(username = it.username, password = hashPassword(it.password))
-                )
+        val loginRequest =
+            context.req.body?.decodeToString()?.let { Json.decodeFromString<LoginRequest>(it) }
+
+        if (loginRequest == null) {
+            context.res.setBodyText(Json.encodeToString(mapOf("error" to "Invalid request body")))
+            return
         }
-        if (user != null) {
-            context.res.setBodyText(
-                Json.encodeToString<UserWithOutPassword>(
-                    UserWithOutPassword(
-                        id = user.id,
-                        username = user.username,
-                    )
-                )
-            )
+
+        val authResponse = context.data.getValue<SupabaseDb>()
+            .signIn(email = loginRequest.email, password = loginRequest.password)
+
+        if (authResponse != null) {
+            context.res.setBodyText(Json.encodeToString(authResponse))
         } else {
-            val ex = Exception("User doesn't exist")
-            context.res.setBodyText(Json.encodeToString(ex))
-            context.logger.error(ex.message.toString())
+            context.res.setBodyText(Json.encodeToString(mapOf("error" to "Invalid credentials")))
         }
     } catch (ex: Exception) {
         context.logger.error(ex.message.toString())
-
+        context.res.setBodyText(Json.encodeToString(mapOf("error" to "Internal server error")))
     }
-}
-
-private fun hashPassword(password: String): String {
-    val messageDigest = MessageDigest.getInstance("SHA-256")
-    val hashBytes = messageDigest.digest(password.toByteArray(StandardCharsets.UTF_8))
-    val hexString = StringBuffer()
-
-    for (byte in hashBytes) {
-        hexString.append(String.format("%02x", byte))
-    }
-    return hexString.toString()
 }
