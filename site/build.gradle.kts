@@ -42,7 +42,10 @@ kotlin {
         }
         jvmMain.dependencies {
             compileOnly(libs.kobweb.api) // Provided by Kobweb backend at runtime
-            implementation(libs.kmongo.database)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.cio)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.kotlinx.serialization)
         }
     }

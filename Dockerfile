@@ -62,6 +62,9 @@ FROM java as run
 
 ARG KOBWEB_APP_ROOT="site"
 
+ENV SUPABASE_URL=""
+ENV SUPABASE_KEY=""
+
 COPY --from=export /project/site/.kobweb .kobweb
 
 ENTRYPOINT .kobweb/server/start.sh
