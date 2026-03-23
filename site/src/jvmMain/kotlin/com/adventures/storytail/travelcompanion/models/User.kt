@@ -12,7 +12,7 @@ import java.util.UUID
 )
 
 @Serializable
- actual data class UserWithOutPassword(
+ actual data class UserWithoutPassword(
      actual val id: String = UUID.randomUUID().toString(),
      actual val username: String = ""
 )

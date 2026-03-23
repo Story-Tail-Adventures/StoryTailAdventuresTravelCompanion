@@ -21,9 +21,13 @@ fun initSupabase(context: InitApiContext) {
 class SupabaseDb(private val context: InitApiContext) : UserRepository {
 
     private val supabaseUrl = System.getenv("SUPABASE_URL")
-        ?: error("SUPABASE_URL environment variable is not set")
     private val supabaseKey = System.getenv("SUPABASE_KEY")
-        ?: error("SUPABASE_KEY environment variable is not set")
+
+    init {
+        if (supabaseUrl.isNullOrBlank() || supabaseKey.isNullOrBlank()) {
+            context.logger.warn("SUPABASE_URL or SUPABASE_KEY is not set. Auth will not work.")
+        }
+    }
 
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
@@ -35,6 +39,10 @@ class SupabaseDb(private val context: InitApiContext) : UserRepository {
     }
 
     override suspend fun signIn(email: String, password: String): AuthResponse? {
+        if (supabaseUrl.isNullOrBlank() || supabaseKey.isNullOrBlank()) {
+            context.logger.error("Supabase is not configured. Cannot sign in.")
+            return null
+        }
         return try {
             val response = client.post("$supabaseUrl/auth/v1/token?grant_type=password") {
                 header("apikey", supabaseKey)

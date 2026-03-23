@@ -12,7 +12,7 @@ actual data class User(
 )
 
 @Serializable
-actual data class UserWithOutPassword (
+actual data class UserWithoutPassword (
     actual val id: String = "",
     actual val username: String = ""
 )

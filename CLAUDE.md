@@ -68,9 +68,16 @@ actual fun getPlatform(): Platform = AndroidPlatform()  // returns SDK version s
 ### site (Kobweb)
 
 - **jsMain/pages/** — file-based routing; each `@Page`-annotated file becomes a route
-- **jsMain/components/** — reusable Compose HTML components
-- **jvmMain/api/** — JVM backend API routes (currently empty placeholders)
+- **jsMain/components/** — reusable Compose HTML components (HeaderSection, HeroSection, DestinationsSection, FooterSection, PageLayout)
+- **jvmMain/api/** — JVM backend API routes (UserCheck for auth; MongoDB/KMongo configured but not yet implemented)
 - Entry point: [site/src/jsMain/kotlin/com/adventures/storytail/travelcompanion/AppEntry.kt](site/src/jsMain/kotlin/com/adventures/storytail/travelcompanion/AppEntry.kt)
+
+Current routes: `/` (landing page), `/admin/login`, `/admin/home`
+
+Design system (defined in `Theme.kt`):
+- Colors: Primary (orange), DarkCharcoal, AccentBlue, LightBlue, White, TextGray variants, LightGray
+- Fonts: Raleway (headings), Mulish (body), Roboto (default) — loaded via Google Fonts CDN
+- Constants and resource paths managed in `Constants.kt` and `Res.kt`
 
 ## Key Dependencies
 
@@ -101,3 +108,6 @@ Dependabot is enabled for weekly Gradle dependency updates.
 - Gradle build cache and configuration cache are both **enabled**
 - Java toolchain: temurin-17 (see [.java-version](.java-version))
 - Kotlin JVM target for `shared`: 17; for `androidApp`: 1.8
+- Kotlin code style: `official` (set in gradle.properties)
+- Compiler flag `-Xexpect-actual-classes` enabled for multiplatform support
+- No linting tools (ktlint, detekt) are configured
