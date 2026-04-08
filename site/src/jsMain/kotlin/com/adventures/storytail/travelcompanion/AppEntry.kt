@@ -16,7 +16,9 @@ import org.w3c.dom.HTMLLinkElement
 
 @InitSilk
 fun initSilk(ctx: InitSilkContext) {
-    ctx.config.initialColorMode = ColorMode.LIGHT
+    ctx.config.initialColorMode = if (
+        kotlinx.browser.window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) ColorMode.DARK else ColorMode.LIGHT
 }
 
 @App
