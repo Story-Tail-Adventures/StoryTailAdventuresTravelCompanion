@@ -2,6 +2,7 @@ package com.adventures.storytail.travelcompanion.components.sections
 
 import androidx.compose.runtime.Composable
 import com.adventures.storytail.travelcompanion.models.Theme
+import com.adventures.storytail.travelcompanion.models.toColorMode
 import com.adventures.storytail.travelcompanion.styles.FooterLinkStyle
 import com.adventures.storytail.travelcompanion.util.Constants.FONT_FAMILY_BODY
 import com.varabyte.kobweb.compose.css.TextAlign
@@ -37,7 +38,7 @@ fun FooterSection() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .backgroundColor(Theme.DarkCharcoal.rgb)
+            .backgroundColor(Theme.LightGray.toColorMode())
             .padding(topBottom = 40.px, leftRight = 24.px),
         contentAlignment = Alignment.Center
     ) {
@@ -108,7 +109,7 @@ fun FooterSection() {
                 modifier = Modifier
                     .fontFamily(FONT_FAMILY_BODY)
                     .fontSize(13.px)
-                    .color(Theme.TextDarkGray.rgb)
+                    .color(Theme.TextDarkGray.toColorMode())
                     .textAlign(TextAlign.Center)
             )
         }

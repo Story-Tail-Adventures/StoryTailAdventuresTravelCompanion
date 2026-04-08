@@ -54,23 +54,23 @@ import org.jetbrains.compose.web.css.vh
 import org.jetbrains.compose.web.dom.Button
 import org.jetbrains.compose.web.dom.Input
 
-// ── Palette — deep navy dark mode matching the design ─────────────────────────
-private val PageBg       = rgb(13,  17,  27)   // deepest background
-private val SidebarBg    = rgb(22,  26,  42)   // sidebar panel
-private val TopNavBg     = rgb(22,  26,  42)   // top bar matches sidebar
-private val CardBg       = rgb(28,  33,  52)   // card surfaces
-private val ActiveNavBg  = rgb(47,  62, 132)   // highlighted nav item
-private val InputBg      = rgb(35,  42,  65)   // input fields
-private val BorderColor  = rgb(40,  48,  78)   // subtle borders
-private val PrimaryBlue  = rgb(79, 120, 244)   // brand blue / CTA
+// ── Palette — warm light theme derived from logo ──────────────────────────────
+private val PageBg       = rgb(255, 250, 245)  // warm white background
+private val SidebarBg    = rgb(255, 255, 255)  // white sidebar
+private val TopNavBg     = rgb(255, 255, 255)  // white top bar
+private val CardBg       = rgb(255, 255, 255)  // white cards
+private val ActiveNavBg  = rgb(255, 240, 224)  // light orange highlight
+private val InputBg      = rgb(245, 240, 235)  // warm light gray inputs
+private val BorderColor  = rgb(230, 220, 210)  // warm border
+private val PrimaryMaroon = rgb(123, 26, 26)   // maroon primary / CTA
 private val GreenAccent  = rgb(16, 185, 129)   // positive trend
-private val OrangeAccent = rgb(245, 158,  11)  // warning / action
+private val OrangeAccent = rgb(246, 147,  29)  // secondary accent
 private val RedAccent    = rgb(239,  68,  68)  // negative trend / done
-private val PurpleAccent = rgb(139,  92, 246)  // revenue / purple accent
+private val PurpleAccent = rgb(139,  92, 246)  // revenue accent
 private val TealAccent   = rgb(20,  184, 166)  // deals accent
-private val WhiteText    = Colors.White
-private val MutedText    = rgb(139, 143, 168)  // secondary text
-private val SectionLabel = rgb(80,   88, 120)  // sidebar section headers
+private val DarkText     = rgb(45,  41,  38)   // primary text on light bg
+private val MutedText    = rgb(139, 125, 117)  // secondary text
+private val SectionLabel = rgb(139, 125, 117)  // sidebar section headers
 
 // ── Data models ───────────────────────────────────────────────────────────────
 private data class SidebarSection(val title: String, val items: List<NavItem>)
@@ -116,7 +116,7 @@ private val sidebarSections = listOf(
 )
 
 private val statCards = listOf(
-    StatCardData("TOTAL BOOKINGS",  "1,520",    "📋", rgb(59,  80, 180), "↑ 12%  vs last month",  GreenAccent),
+    StatCardData("TOTAL BOOKINGS",  "1,520",    "📋", PrimaryMaroon,      "↑ 12%  vs last month",  GreenAccent),
     StatCardData("ACTIVE DEALS",    "48",       "🏷", TealAccent,        "↑ 5  new this week",    GreenAccent),
     StatCardData("PENDING REVIEWS", "12",       "⭐", OrangeAccent,      "Action needed",          OrangeAccent),
     StatCardData("REVENUE (MAY)",   "\$135,965","📈", PurpleAccent,      "↓ 2.4%  vs last month", RedAccent),
@@ -125,7 +125,7 @@ private val statCards = listOf(
 private val sampleTasks = listOf(
     TaskItemData("Review \"Summer in Italy\" testimonials", badge = "High Priority", badgeColor = OrangeAccent),
     TaskItemData("Update pricing for Maldives package",     done = true),
-    TaskItemData("Upload new photos for Swiss Alps",         badge = "Media",         badgeColor = PrimaryBlue),
+    TaskItemData("Upload new photos for Swiss Alps",         badge = "Media",         badgeColor = PrimaryMaroon),
     TaskItemData("Draft blog post: \"Top 10 Winter Destinations\""),
 )
 
@@ -240,8 +240,8 @@ private fun TopNavBar() {
             Button(
                 attrs = Modifier
                     .height(36.px)
-                    .backgroundColor(PrimaryBlue)
-                    .color(WhiteText)
+                    .backgroundColor(PrimaryMaroon)
+                    .color(Colors.White)
                     .borderRadius(8.px)
                     .border(width = 0.px, style = LineStyle.None, color = Colors.Transparent)
                     .outline(width = 0.px, style = LineStyle.None, color = Colors.Transparent)
@@ -252,7 +252,7 @@ private fun TopNavBar() {
                     .cursor(Cursor.Pointer)
                     .toAttrs()
             ) {
-                SpanText("+ New Deal", modifier = Modifier.color(WhiteText).fontFamily(FONT_FAMILY))
+                SpanText("+ New Deal", modifier = Modifier.color(Colors.White).fontFamily(FONT_FAMILY))
             }
         }
     }
@@ -310,12 +310,12 @@ private fun NavMenuItem(item: NavItem) {
                     modifier = Modifier
                         .fontSize(14.px)
                         .margin(right = 10.px)
-                        .color(if (item.isActive) WhiteText else MutedText)
+                        .color(if (item.isActive) DarkText else MutedText)
                 )
                 SpanText(
                     text = item.label,
                     modifier = Modifier
-                        .color(if (item.isActive) WhiteText else MutedText)
+                        .color(if (item.isActive) DarkText else MutedText)
                         .fontSize(14.px)
                         .fontFamily(FONT_FAMILY)
                         .fontWeight(if (item.isActive) FontWeight.SemiBold else FontWeight.Normal)
@@ -332,7 +332,7 @@ private fun NavMenuItem(item: NavItem) {
                     SpanText(
                         text = item.badge,
                         modifier = Modifier
-                            .color(WhiteText)
+                            .color(Colors.White)
                             .fontSize(10.px)
                             .fontFamily(FONT_FAMILY)
                             .fontWeight(FontWeight.Bold)
@@ -358,7 +358,7 @@ private fun DashboardContent() {
             SpanText(
                 text = "Welcome back, Alex! 👋",
                 modifier = Modifier
-                    .color(WhiteText)
+                    .color(DarkText)
                     .fontSize(26.px)
                     .fontWeight(FontWeight.Bold)
                     .fontFamily(FONT_FAMILY)
@@ -383,7 +383,7 @@ private fun DashboardContent() {
             listOf("Today", "Week", "Month").forEach { label ->
                 Box(
                     modifier = Modifier
-                        .backgroundColor(if (activeFilter == label) WhiteText else Colors.Transparent)
+                        .backgroundColor(if (activeFilter == label) PrimaryMaroon else Colors.Transparent)
                         .borderRadius(6.px)
                         .padding(leftRight = 16.px, topBottom = 6.px)
                         .cursor(Cursor.Pointer)
@@ -393,7 +393,7 @@ private fun DashboardContent() {
                     SpanText(
                         text = label,
                         modifier = Modifier
-                            .color(if (activeFilter == label) PageBg else MutedText)
+                            .color(if (activeFilter == label) Colors.White else MutedText)
                             .fontSize(13.px)
                             .fontFamily(FONT_FAMILY)
                             .fontWeight(if (activeFilter == label) FontWeight.Medium else FontWeight.Normal)
@@ -458,7 +458,7 @@ private fun StatCard(modifier: Modifier, card: StatCardData) {
         SpanText(
             text = card.value,
             modifier = Modifier
-                .color(WhiteText)
+                .color(DarkText)
                 .fontSize(28.px)
                 .fontWeight(FontWeight.Bold)
                 .fontFamily(FONT_FAMILY)
@@ -493,7 +493,7 @@ private fun BookingAnalyticsPanel(modifier: Modifier) {
             SpanText(
                 text = "Booking Analytics",
                 modifier = Modifier
-                    .color(WhiteText)
+                    .color(DarkText)
                     .fontSize(16.px)
                     .fontWeight(FontWeight.SemiBold)
                     .fontFamily(FONT_FAMILY)
@@ -547,7 +547,7 @@ private fun BookingAnalyticsPanel(modifier: Modifier) {
                         .fillMaxWidth()
                         .height(175.px)
                         .styleModifier {
-                            property("background", "linear-gradient(to bottom, rgba(79,120,244,0.28), rgba(79,120,244,0.04))")
+                            property("background", "linear-gradient(to bottom, rgba(123,26,26,0.28), rgba(123,26,26,0.04))")
                             property("clip-path", "polygon(0% 93%, 12% 87%, 25% 74%, 37% 58%, 50% 42%, 62% 28%, 75% 15%, 87% 8%, 100% 3%, 100% 100%, 0% 100%)")
                         }
                 )
@@ -557,7 +557,7 @@ private fun BookingAnalyticsPanel(modifier: Modifier) {
                         .fillMaxWidth()
                         .height(175.px)
                         .styleModifier {
-                            property("background", "rgb(79,120,244)")
+                            property("background", "rgb(123,26,26)")
                             property("clip-path", "polygon(0% 93%, 12% 87%, 25% 74%, 37% 58%, 50% 42%, 62% 28%, 75% 15%, 87% 8%, 100% 3%, 100% 4.5%, 87% 9.5%, 75% 16.5%, 62% 29.5%, 50% 43.5%, 37% 59.5%, 25% 75.5%, 12% 88.5%, 0% 94.5%)")
                         }
                 )
@@ -607,7 +607,7 @@ private fun QuickTasksPanel(modifier: Modifier) {
             SpanText(
                 text = "Quick Tasks",
                 modifier = Modifier
-                    .color(WhiteText)
+                    .color(DarkText)
                     .fontSize(16.px)
                     .fontWeight(FontWeight.SemiBold)
                     .fontFamily(FONT_FAMILY)
@@ -624,7 +624,7 @@ private fun QuickTasksPanel(modifier: Modifier) {
                         SpanText(
                             text = tab,
                             modifier = Modifier
-                                .color(if (activeTab == tab) PrimaryBlue else MutedText)
+                                .color(if (activeTab == tab) PrimaryMaroon else MutedText)
                                 .fontSize(13.px)
                                 .fontFamily(FONT_FAMILY)
                                 .fontWeight(if (activeTab == tab) FontWeight.SemiBold else FontWeight.Normal)
@@ -634,7 +634,7 @@ private fun QuickTasksPanel(modifier: Modifier) {
                                 modifier = Modifier
                                     .width(32.px)
                                     .height(2.px)
-                                    .backgroundColor(PrimaryBlue)
+                                    .backgroundColor(PrimaryMaroon)
                                     .margin(top = 4.px)
                             )
                         }
@@ -654,7 +654,7 @@ private fun QuickTasksPanel(modifier: Modifier) {
                     .weight(1f)
                     .height(40.px)
                     .backgroundColor(InputBg)
-                    .color(WhiteText)
+                    .color(DarkText)
                     .borderRadius(8.px)
                     .border(width = 1.px, style = LineStyle.Solid, color = BorderColor)
                     .outline(width = 0.px, style = LineStyle.None, color = Colors.Transparent)
@@ -666,8 +666,8 @@ private fun QuickTasksPanel(modifier: Modifier) {
             Button(
                 attrs = Modifier
                     .height(40.px)
-                    .backgroundColor(PrimaryBlue)
-                    .color(WhiteText)
+                    .backgroundColor(PrimaryMaroon)
+                    .color(Colors.White)
                     .borderRadius(8.px)
                     .border(width = 0.px, style = LineStyle.None, color = Colors.Transparent)
                     .outline(width = 0.px, style = LineStyle.None, color = Colors.Transparent)
@@ -678,7 +678,7 @@ private fun QuickTasksPanel(modifier: Modifier) {
                     .cursor(Cursor.Pointer)
                     .toAttrs()
             ) {
-                SpanText("ADD", modifier = Modifier.color(WhiteText).fontFamily(FONT_FAMILY))
+                SpanText("ADD", modifier = Modifier.color(Colors.White).fontFamily(FONT_FAMILY))
             }
         }
 
@@ -714,7 +714,7 @@ private fun TaskRow(task: TaskItemData) {
             contentAlignment = Alignment.Center
         ) {
             if (task.done) {
-                SpanText("✓", modifier = Modifier.color(WhiteText).fontSize(11.px))
+                SpanText("✓", modifier = Modifier.color(Colors.White).fontSize(11.px))
             }
         }
         // Task text + badge
@@ -722,7 +722,7 @@ private fun TaskRow(task: TaskItemData) {
             SpanText(
                 text = task.text,
                 modifier = Modifier
-                    .color(if (task.done) MutedText else WhiteText)
+                    .color(if (task.done) MutedText else DarkText)
                     .fontSize(13.px)
                     .fontFamily(FONT_FAMILY)
                     .let { if (task.done) it.textDecorationLine(TextDecorationLine.LineThrough) else it }
@@ -739,7 +739,7 @@ private fun TaskRow(task: TaskItemData) {
                     SpanText(
                         text = task.badge,
                         modifier = Modifier
-                            .color(WhiteText)
+                            .color(Colors.White)
                             .fontSize(10.px)
                             .fontFamily(FONT_FAMILY)
                             .fontWeight(FontWeight.Medium)

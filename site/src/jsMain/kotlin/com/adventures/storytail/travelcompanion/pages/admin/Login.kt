@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.adventures.storytail.travelcompanion.models.Theme
+import com.adventures.storytail.travelcompanion.models.toColorMode
 import com.adventures.storytail.travelcompanion.styles.LoginInputStyle
 import com.adventures.storytail.travelcompanion.util.Constants.FONT_FAMILY
 import com.adventures.storytail.travelcompanion.util.Id
@@ -39,6 +40,7 @@ import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.Page
 import com.varabyte.kobweb.silk.components.graphics.Image
 import com.varabyte.kobweb.silk.style.toModifier
+import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.components.text.SpanText
 import org.jetbrains.compose.web.attributes.InputType
 import org.jetbrains.compose.web.attributes.placeholder
@@ -59,7 +61,7 @@ fun LoginScreen() {
         Column(
             modifier = Modifier
                 .padding(leftRight = 50.px, top = 80.px, bottom = 24.px)
-                .backgroundColor(Theme.LightGray.rgb),
+                .backgroundColor(Theme.LightGray.toColorMode()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -67,7 +69,7 @@ fun LoginScreen() {
                 modifier = Modifier
                     .padding(bottom = 50.px)
                     .width(350.px),
-                src = Res.Image.logo,
+                src = if (ColorMode.current.isLight) Res.Image.logo else Res.Image.logoDark,
                 description = "Logo"
             )
             Input(
@@ -80,7 +82,7 @@ fun LoginScreen() {
                     .fontFamily(FONT_FAMILY)
                     .fontSize(14.px)
                     .padding(leftRight = 20.px)
-                    .backgroundColor(Colors.White)
+                    .backgroundColor(Theme.White.toColorMode())
                     .toAttrs{
                         placeholder("Email")
                     }
@@ -95,7 +97,7 @@ fun LoginScreen() {
                     .fontFamily(FONT_FAMILY)
                     .fontSize(14.px)
                     .padding(leftRight = 20.px)
-                    .backgroundColor(Colors.White)
+                    .backgroundColor(Theme.White.toColorMode())
                     .toAttrs{
                         placeholder("Password")
                     }
@@ -104,7 +106,7 @@ fun LoginScreen() {
                 attrs = Modifier
                     .width(350.px)
                     .height(54.px)
-                    .backgroundColor(Theme.Primary.rgb)
+                    .backgroundColor(Theme.Primary.toColorMode())
                     .color(Colors.White)
                     .fontFamily(FONT_FAMILY)
                     .fontSize(14.px)

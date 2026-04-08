@@ -1,6 +1,7 @@
 package com.adventures.storytail.travelcompanion.styles
 
 import com.adventures.storytail.travelcompanion.models.Theme
+import com.adventures.storytail.travelcompanion.models.forColorMode
 import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Colors
@@ -25,7 +26,7 @@ val LoginInputStyle = CssStyle {
         Modifier.border(
             width = 2.px,
             style = LineStyle.Solid,
-            color = Theme.Primary.rgb
+            color = Theme.Primary.forColorMode(colorMode)
         )
     }
 }

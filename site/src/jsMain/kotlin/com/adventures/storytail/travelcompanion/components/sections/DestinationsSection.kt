@@ -2,6 +2,7 @@ package com.adventures.storytail.travelcompanion.components.sections
 
 import androidx.compose.runtime.Composable
 import com.adventures.storytail.travelcompanion.models.Theme
+import com.adventures.storytail.travelcompanion.models.toColorMode
 import com.adventures.storytail.travelcompanion.styles.DestinationCardStyle
 import com.adventures.storytail.travelcompanion.util.Constants.FONT_FAMILY_BODY
 import com.adventures.storytail.travelcompanion.util.Constants.FONT_FAMILY_HEADING
@@ -59,7 +60,7 @@ fun DestinationsSection() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(topBottom = 60.px, leftRight = 24.px)
-            .backgroundColor(Colors.White),
+            .backgroundColor(Theme.White.toColorMode()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Section heading
@@ -69,7 +70,7 @@ fun DestinationsSection() {
                 .fontFamily(FONT_FAMILY_HEADING)
                 .fontSize(2.2.cssRem)
                 .fontWeight(FontWeight.Bold)
-                .color(Theme.DarkCharcoal.rgb)
+                .color(Theme.DarkCharcoal.toColorMode())
                 .textAlign(TextAlign.Center)
                 .margin(bottom = 12.px)
         )
@@ -80,7 +81,7 @@ fun DestinationsSection() {
             modifier = Modifier
                 .fontFamily(FONT_FAMILY_BODY)
                 .fontSize(1.cssRem)
-                .color(Theme.TextGray.rgb)
+                .color(Theme.TextGray.toColorMode())
                 .textAlign(TextAlign.Center)
                 .margin(bottom = 40.px)
         )
@@ -143,7 +144,7 @@ private fun DestinationCard(destination: Destination) {
                     .fontFamily(FONT_FAMILY_BODY)
                     .fontSize(14.px)
                     .fontWeight(FontWeight.SemiBold)
-                    .color(Theme.LightBlue.rgb)
+                    .color(Theme.Secondary.toColorMode())
             )
         }
     }

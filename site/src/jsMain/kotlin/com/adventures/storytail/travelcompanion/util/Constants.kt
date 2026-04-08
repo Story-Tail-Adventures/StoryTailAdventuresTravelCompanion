@@ -9,6 +9,7 @@ object Constants {
 object Res {
     object Image {
         const val logo = "/stalogo.webp"
+        const val logoDark = "/stalogo-dark.png"
     }
 }
 

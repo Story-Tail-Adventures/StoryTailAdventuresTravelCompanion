@@ -95,7 +95,7 @@ val MyComponentStyle = CssStyle {
             .transition(Transition.of("color", 300.ms))
     }
     hover {
-        Modifier.color(Theme.AccentBlue.rgb)
+        Modifier.color(Theme.Primary.rgb)
     }
 }
 ```

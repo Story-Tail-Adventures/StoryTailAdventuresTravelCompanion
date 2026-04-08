@@ -29,6 +29,7 @@ import com.varabyte.kobweb.compose.ui.modifiers.padding
 import com.varabyte.kobweb.compose.ui.modifiers.textAlign
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.components.text.SpanText
+import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.css.rgba
@@ -36,11 +37,17 @@ import org.jetbrains.compose.web.css.vh
 
 @Composable
 fun HeroSection() {
+    val heroOverlay = if (ColorMode.current.isLight) {
+        rgba(123, 26, 26, 0.80)
+    } else {
+        rgba(18, 18, 18, 0.90)
+    }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .minHeight(80.vh)
-            .backgroundColor(rgba(36, 38, 37, 0.85)),
+            .backgroundColor(heroOverlay),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -75,7 +82,7 @@ fun HeroSection() {
                 modifier = Modifier
                     .fontFamily(FONT_FAMILY_BODY)
                     .fontSize(1.1.cssRem)
-                    .color(Theme.TextGray.rgb)
+                    .color(rgba(255, 255, 255, 0.7))
                     .textAlign(TextAlign.Center)
                     .margin(top = 8.px)
             )
