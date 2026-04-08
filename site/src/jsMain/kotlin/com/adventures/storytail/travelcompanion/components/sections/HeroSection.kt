@@ -40,7 +40,7 @@ fun HeroSection() {
     val heroOverlay = if (ColorMode.current.isLight) {
         rgba(123, 26, 26, 0.80)
     } else {
-        rgba(18, 18, 18, 0.90)
+        rgba(18, 18, 18, 0.80)
     }
 
     Box(

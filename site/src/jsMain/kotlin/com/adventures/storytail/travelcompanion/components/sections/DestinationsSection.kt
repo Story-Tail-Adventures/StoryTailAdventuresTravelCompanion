@@ -144,7 +144,7 @@ private fun DestinationCard(destination: Destination) {
                     .fontFamily(FONT_FAMILY_BODY)
                     .fontSize(14.px)
                     .fontWeight(FontWeight.SemiBold)
-                    .color(Theme.Secondary.toColorMode())
+                    .color(Theme.Primary.toColorMode())
             )
         }
     }
