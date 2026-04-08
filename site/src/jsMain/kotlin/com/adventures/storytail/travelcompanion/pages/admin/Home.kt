@@ -555,6 +555,7 @@ private fun BookingAnalyticsPanel(modifier: Modifier) {
                     }
                 }
                 // Primary area chart (clip-path polygon approximates a rising curve)
+                // Light: matches Theme.Primary.rgb (123,26,26), Dark: matches Theme.Primary.darkRgb (232,135,42)
                 val primaryChartGradient = if (ColorMode.current.isLight) {
                     "linear-gradient(to bottom, rgba(123,26,26,0.28), rgba(123,26,26,0.04))"
                 } else {

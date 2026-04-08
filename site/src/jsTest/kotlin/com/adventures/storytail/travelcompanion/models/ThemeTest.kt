@@ -1,12 +1,14 @@
 package com.adventures.storytail.travelcompanion.models
 
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import org.jetbrains.compose.web.css.rgb
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
 
+// Note: Theme.toColorMode() is a @Composable extension that reads ColorMode.current.
+// It cannot be unit-tested without the Compose runtime. The non-composable forColorMode()
+// is tested below as a proxy — both use the same branching logic.
 class ThemeTest {
 
     @Test
