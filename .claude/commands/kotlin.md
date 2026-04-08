@@ -186,7 +186,7 @@ fun MyPage() {
 ```
 
 ### Design System
-- Colors: `Theme.Primary.rgb`, `Theme.AccentBlue.rgb`, etc. (never hardcode hex)
+- Colors: `Theme.Primary.rgb`, `Theme.Secondary.rgb`, etc. (never hardcode hex)
 - Headings: `Constants.FONT_FAMILY_HEADING` (Raleway)
 - Body: `Constants.FONT_FAMILY_BODY` (Mulish)
 - Default: `Constants.FONT_FAMILY` (Roboto)
@@ -195,7 +195,7 @@ fun MyPage() {
 ```kotlin
 val MyStyle = CssStyle {
     base { Modifier.backgroundColor(Theme.White.rgb).transition(Transition.of("color", 300.ms)) }
-    hover { Modifier.color(Theme.AccentBlue.rgb) }
+    hover { Modifier.color(Theme.Primary.rgb) }
 }
 // Usage: MyStyle.toModifier().width(300.px)
 ```

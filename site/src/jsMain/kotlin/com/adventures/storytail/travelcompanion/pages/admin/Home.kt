@@ -5,7 +5,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.adventures.storytail.travelcompanion.models.Theme
+import com.adventures.storytail.travelcompanion.models.toColorMode
 import com.adventures.storytail.travelcompanion.util.Constants.FONT_FAMILY
+import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.adventures.storytail.travelcompanion.util.Res
 import com.varabyte.kobweb.compose.css.Cursor
 import com.varabyte.kobweb.compose.css.FontWeight
@@ -43,6 +46,9 @@ import com.varabyte.kobweb.compose.ui.modifiers.width
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.Page
 import com.varabyte.kobweb.silk.components.graphics.Image
+import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
+import com.varabyte.kobweb.silk.components.icons.fa.FaSun
+import com.varabyte.kobweb.silk.components.icons.fa.IconSize
 import com.varabyte.kobweb.silk.components.text.SpanText
 import org.jetbrains.compose.web.attributes.InputType
 import org.jetbrains.compose.web.attributes.placeholder
@@ -54,23 +60,13 @@ import org.jetbrains.compose.web.css.vh
 import org.jetbrains.compose.web.dom.Button
 import org.jetbrains.compose.web.dom.Input
 
-// ── Palette — deep navy dark mode matching the design ─────────────────────────
-private val PageBg       = rgb(13,  17,  27)   // deepest background
-private val SidebarBg    = rgb(22,  26,  42)   // sidebar panel
-private val TopNavBg     = rgb(22,  26,  42)   // top bar matches sidebar
-private val CardBg       = rgb(28,  33,  52)   // card surfaces
-private val ActiveNavBg  = rgb(47,  62, 132)   // highlighted nav item
-private val InputBg      = rgb(35,  42,  65)   // input fields
-private val BorderColor  = rgb(40,  48,  78)   // subtle borders
-private val PrimaryBlue  = rgb(79, 120, 244)   // brand blue / CTA
+// ── Accent palette — semantic colors that don't change with dark/light mode ──
+private val PrimaryMaroon = rgb(123, 26, 26)   // maroon primary for icon badges
 private val GreenAccent  = rgb(16, 185, 129)   // positive trend
-private val OrangeAccent = rgb(245, 158,  11)  // warning / action
+private val OrangeAccent = rgb(246, 147,  29)  // secondary accent
 private val RedAccent    = rgb(239,  68,  68)  // negative trend / done
-private val PurpleAccent = rgb(139,  92, 246)  // revenue / purple accent
+private val PurpleAccent = rgb(139,  92, 246)  // revenue accent
 private val TealAccent   = rgb(20,  184, 166)  // deals accent
-private val WhiteText    = Colors.White
-private val MutedText    = rgb(139, 143, 168)  // secondary text
-private val SectionLabel = rgb(80,   88, 120)  // sidebar section headers
 
 // ── Data models ───────────────────────────────────────────────────────────────
 private data class SidebarSection(val title: String, val items: List<NavItem>)
@@ -116,7 +112,7 @@ private val sidebarSections = listOf(
 )
 
 private val statCards = listOf(
-    StatCardData("TOTAL BOOKINGS",  "1,520",    "📋", rgb(59,  80, 180), "↑ 12%  vs last month",  GreenAccent),
+    StatCardData("TOTAL BOOKINGS",  "1,520",    "📋", PrimaryMaroon,      "↑ 12%  vs last month",  GreenAccent),
     StatCardData("ACTIVE DEALS",    "48",       "🏷", TealAccent,        "↑ 5  new this week",    GreenAccent),
     StatCardData("PENDING REVIEWS", "12",       "⭐", OrangeAccent,      "Action needed",          OrangeAccent),
     StatCardData("REVENUE (MAY)",   "\$135,965","📈", PurpleAccent,      "↓ 2.4%  vs last month", RedAccent),
@@ -125,7 +121,7 @@ private val statCards = listOf(
 private val sampleTasks = listOf(
     TaskItemData("Review \"Summer in Italy\" testimonials", badge = "High Priority", badgeColor = OrangeAccent),
     TaskItemData("Update pricing for Maldives package",     done = true),
-    TaskItemData("Upload new photos for Swiss Alps",         badge = "Media",         badgeColor = PrimaryBlue),
+    TaskItemData("Upload new photos for Swiss Alps",         badge = "Media",         badgeColor = PrimaryMaroon),
     TaskItemData("Draft blog post: \"Top 10 Winter Destinations\""),
 )
 
@@ -137,7 +133,7 @@ fun HomePage() {
         modifier = Modifier
             .fillMaxSize()
             .minHeight(100.vh)
-            .backgroundColor(PageBg)
+            .backgroundColor(Theme.Background.toColorMode())
     ) {
         TopNavBar()
         Row(modifier = Modifier.fillMaxWidth().flexGrow(1)) {
@@ -145,7 +141,7 @@ fun HomePage() {
             Column(
                 modifier = Modifier
                     .flexGrow(1)
-                    .backgroundColor(PageBg)
+                    .backgroundColor(Theme.Background.toColorMode())
                     .overflow(Overflow.Auto)
                     .padding(all = 28.px)
             ) {
@@ -162,8 +158,8 @@ private fun TopNavBar() {
         modifier = Modifier
             .fillMaxWidth()
             .height(60.px)
-            .backgroundColor(TopNavBg)
-            .border(width = 1.px, style = LineStyle.Solid, color = BorderColor)
+            .backgroundColor(Theme.White.toColorMode())
+            .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
             .padding(leftRight = 20.px),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -174,14 +170,14 @@ private fun TopNavBar() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                src = Res.Image.logo,
+                src = if (ColorMode.current.isLight) Res.Image.logo else Res.Image.logoDark,
                 description = "Story Tail Adventures",
                 modifier = Modifier.height(30.px).margin(right = 10.px)
             )
             SpanText(
                 text = "ADVENTURES ADMIN",
                 modifier = Modifier
-                    .color(MutedText)
+                    .color(Theme.TextGray.toColorMode())
                     .fontSize(10.px)
                     .fontFamily(FONT_FAMILY)
                     .fontWeight(FontWeight.SemiBold)
@@ -194,9 +190,9 @@ private fun TopNavBar() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(38.px)
-                    .backgroundColor(InputBg)
+                    .backgroundColor(Theme.LightGray.toColorMode())
                     .borderRadius(8.px)
-                    .border(width = 1.px, style = LineStyle.Solid, color = BorderColor)
+                    .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
                     .padding(leftRight = 14.px),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -210,7 +206,7 @@ private fun TopNavBar() {
                         .fillMaxWidth()
                         .height(36.px)
                         .backgroundColor(Colors.Transparent)
-                        .color(MutedText)
+                        .color(Theme.TextGray.toColorMode())
                         .border(width = 0.px, style = LineStyle.None, color = Colors.Transparent)
                         .outline(width = 0.px, style = LineStyle.None, color = Colors.Transparent)
                         .fontFamily(FONT_FAMILY)
@@ -220,28 +216,45 @@ private fun TopNavBar() {
             }
         }
 
-        // Actions — bell + CTA button
+        // Actions — bell + dark mode toggle + CTA button
         Row(
             modifier = Modifier.gap(16.px),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            var colorMode by ColorMode.currentState
             Box(
                 modifier = Modifier
                     .width(36.px)
                     .height(36.px)
-                    .backgroundColor(InputBg)
+                    .backgroundColor(Theme.LightGray.toColorMode())
                     .borderRadius(8.px)
-                    .border(width = 1.px, style = LineStyle.Solid, color = BorderColor)
+                    .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
                     .cursor(Cursor.Pointer),
                 contentAlignment = Alignment.Center
             ) {
                 SpanText("🔔", modifier = Modifier.fontSize(16.px))
             }
+            // Dark/Light mode toggle
+            Box(
+                modifier = Modifier
+                    .width(36.px)
+                    .height(36.px)
+                    .backgroundColor(Theme.LightGray.toColorMode())
+                    .borderRadius(8.px)
+                    .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
+                    .color(Theme.DarkCharcoal.toColorMode())
+                    .cursor(Cursor.Pointer)
+                    .onClick { colorMode = colorMode.opposite },
+                contentAlignment = Alignment.Center
+            ) {
+                if (colorMode.isLight) FaMoon(size = IconSize.SM)
+                else FaSun(size = IconSize.SM)
+            }
             Button(
                 attrs = Modifier
                     .height(36.px)
-                    .backgroundColor(PrimaryBlue)
-                    .color(WhiteText)
+                    .backgroundColor(Theme.Primary.toColorMode())
+                    .color(Colors.White)
                     .borderRadius(8.px)
                     .border(width = 0.px, style = LineStyle.None, color = Colors.Transparent)
                     .outline(width = 0.px, style = LineStyle.None, color = Colors.Transparent)
@@ -252,7 +265,7 @@ private fun TopNavBar() {
                     .cursor(Cursor.Pointer)
                     .toAttrs()
             ) {
-                SpanText("+ New Deal", modifier = Modifier.color(WhiteText).fontFamily(FONT_FAMILY))
+                SpanText("+ New Deal", modifier = Modifier.color(Colors.White).fontFamily(FONT_FAMILY))
             }
         }
     }
@@ -265,8 +278,8 @@ private fun AdminSidebar() {
         modifier = Modifier
             .width(240.px)
             .minHeight(100.vh)
-            .backgroundColor(SidebarBg)
-            .border(width = 1.px, style = LineStyle.Solid, color = BorderColor)
+            .backgroundColor(Theme.White.toColorMode())
+            .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
             .padding(top = 12.px, bottom = 24.px)
             .overflow(Overflow.Hidden)
     ) {
@@ -276,7 +289,7 @@ private fun AdminSidebar() {
                 modifier = Modifier
                     .padding(leftRight = 20.px, topBottom = 6.px)
                     .margin(top = 12.px)
-                    .color(SectionLabel)
+                    .color(Theme.TextGray.toColorMode())
                     .fontSize(10.px)
                     .fontWeight(FontWeight.SemiBold)
                     .fontFamily(FONT_FAMILY)
@@ -299,7 +312,7 @@ private fun NavMenuItem(item: NavItem) {
                 .fillMaxWidth()
                 .height(38.px)
                 .borderRadius(8.px)
-                .backgroundColor(if (item.isActive) ActiveNavBg else Colors.Transparent)
+                .backgroundColor(if (item.isActive) Theme.SecondaryLight.toColorMode() else Colors.Transparent)
                 .padding(leftRight = 12.px),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -310,12 +323,12 @@ private fun NavMenuItem(item: NavItem) {
                     modifier = Modifier
                         .fontSize(14.px)
                         .margin(right = 10.px)
-                        .color(if (item.isActive) WhiteText else MutedText)
+                        .color(if (item.isActive) Theme.DarkCharcoal.toColorMode() else Theme.TextGray.toColorMode())
                 )
                 SpanText(
                     text = item.label,
                     modifier = Modifier
-                        .color(if (item.isActive) WhiteText else MutedText)
+                        .color(if (item.isActive) Theme.DarkCharcoal.toColorMode() else Theme.TextGray.toColorMode())
                         .fontSize(14.px)
                         .fontFamily(FONT_FAMILY)
                         .fontWeight(if (item.isActive) FontWeight.SemiBold else FontWeight.Normal)
@@ -332,7 +345,7 @@ private fun NavMenuItem(item: NavItem) {
                     SpanText(
                         text = item.badge,
                         modifier = Modifier
-                            .color(WhiteText)
+                            .color(Colors.White)
                             .fontSize(10.px)
                             .fontFamily(FONT_FAMILY)
                             .fontWeight(FontWeight.Bold)
@@ -358,7 +371,7 @@ private fun DashboardContent() {
             SpanText(
                 text = "Welcome back, Alex! 👋",
                 modifier = Modifier
-                    .color(WhiteText)
+                    .color(Theme.DarkCharcoal.toColorMode())
                     .fontSize(26.px)
                     .fontWeight(FontWeight.Bold)
                     .fontFamily(FONT_FAMILY)
@@ -366,7 +379,7 @@ private fun DashboardContent() {
             SpanText(
                 text = "Here's what's happening with your travel packages today.",
                 modifier = Modifier
-                    .color(MutedText)
+                    .color(Theme.TextGray.toColorMode())
                     .fontSize(14.px)
                     .fontFamily(FONT_FAMILY)
                     .margin(top = 4.px)
@@ -375,15 +388,15 @@ private fun DashboardContent() {
         // Today / Week / Month toggle
         Row(
             modifier = Modifier
-                .backgroundColor(CardBg)
+                .backgroundColor(Theme.White.toColorMode())
                 .borderRadius(8.px)
-                .border(width = 1.px, style = LineStyle.Solid, color = BorderColor)
+                .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
                 .padding(all = 4.px)
         ) {
             listOf("Today", "Week", "Month").forEach { label ->
                 Box(
                     modifier = Modifier
-                        .backgroundColor(if (activeFilter == label) WhiteText else Colors.Transparent)
+                        .backgroundColor(if (activeFilter == label) Theme.Primary.toColorMode() else Colors.Transparent)
                         .borderRadius(6.px)
                         .padding(leftRight = 16.px, topBottom = 6.px)
                         .cursor(Cursor.Pointer)
@@ -393,7 +406,7 @@ private fun DashboardContent() {
                     SpanText(
                         text = label,
                         modifier = Modifier
-                            .color(if (activeFilter == label) PageBg else MutedText)
+                            .color(if (activeFilter == label) Colors.White else Theme.TextGray.toColorMode())
                             .fontSize(13.px)
                             .fontFamily(FONT_FAMILY)
                             .fontWeight(if (activeFilter == label) FontWeight.Medium else FontWeight.Normal)
@@ -426,9 +439,9 @@ private fun DashboardContent() {
 private fun StatCard(modifier: Modifier, card: StatCardData) {
     Column(
         modifier = modifier
-            .backgroundColor(CardBg)
+            .backgroundColor(Theme.White.toColorMode())
             .borderRadius(12.px)
-            .border(width = 1.px, style = LineStyle.Solid, color = BorderColor)
+            .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
             .padding(all = 20.px)
     ) {
         Row(
@@ -439,7 +452,7 @@ private fun StatCard(modifier: Modifier, card: StatCardData) {
             SpanText(
                 text = card.title,
                 modifier = Modifier
-                    .color(MutedText)
+                    .color(Theme.TextGray.toColorMode())
                     .fontSize(11.px)
                     .fontWeight(FontWeight.SemiBold)
                     .fontFamily(FONT_FAMILY)
@@ -458,7 +471,7 @@ private fun StatCard(modifier: Modifier, card: StatCardData) {
         SpanText(
             text = card.value,
             modifier = Modifier
-                .color(WhiteText)
+                .color(Theme.DarkCharcoal.toColorMode())
                 .fontSize(28.px)
                 .fontWeight(FontWeight.Bold)
                 .fontFamily(FONT_FAMILY)
@@ -479,9 +492,9 @@ private fun StatCard(modifier: Modifier, card: StatCardData) {
 private fun BookingAnalyticsPanel(modifier: Modifier) {
     Column(
         modifier = modifier
-            .backgroundColor(CardBg)
+            .backgroundColor(Theme.White.toColorMode())
             .borderRadius(12.px)
-            .border(width = 1.px, style = LineStyle.Solid, color = BorderColor)
+            .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
             .padding(all = 20.px)
     ) {
         // Panel header
@@ -493,7 +506,7 @@ private fun BookingAnalyticsPanel(modifier: Modifier) {
             SpanText(
                 text = "Booking Analytics",
                 modifier = Modifier
-                    .color(WhiteText)
+                    .color(Theme.DarkCharcoal.toColorMode())
                     .fontSize(16.px)
                     .fontWeight(FontWeight.SemiBold)
                     .fontFamily(FONT_FAMILY)
@@ -501,7 +514,7 @@ private fun BookingAnalyticsPanel(modifier: Modifier) {
             SpanText(
                 text = "•••",
                 modifier = Modifier
-                    .color(MutedText)
+                    .color(Theme.TextGray.toColorMode())
                     .fontSize(14.px)
                     .cursor(Cursor.Pointer)
             )
@@ -520,7 +533,7 @@ private fun BookingAnalyticsPanel(modifier: Modifier) {
                     SpanText(
                         text = label,
                         modifier = Modifier
-                            .color(MutedText)
+                            .color(Theme.TextGray.toColorMode())
                             .fontSize(11.px)
                             .fontFamily(FONT_FAMILY)
                     )
@@ -537,27 +550,38 @@ private fun BookingAnalyticsPanel(modifier: Modifier) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(1.px)
-                                .backgroundColor(BorderColor)
+                                .backgroundColor(Theme.Border.toColorMode())
                         )
                     }
                 }
-                // Blue area chart (clip-path polygon approximates a rising curve)
+                // Primary area chart (clip-path polygon approximates a rising curve)
+                // Light: matches Theme.Primary.rgb (123,26,26), Dark: matches Theme.Primary.darkRgb (232,135,42)
+                val primaryChartGradient = if (ColorMode.current.isLight) {
+                    "linear-gradient(to bottom, rgba(123,26,26,0.28), rgba(123,26,26,0.04))"
+                } else {
+                    "linear-gradient(to bottom, rgba(232,135,42,0.28), rgba(232,135,42,0.04))"
+                }
+                val primaryChartStroke = if (ColorMode.current.isLight) {
+                    "rgb(123,26,26)"
+                } else {
+                    "rgb(232,135,42)"
+                }
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(175.px)
                         .styleModifier {
-                            property("background", "linear-gradient(to bottom, rgba(79,120,244,0.28), rgba(79,120,244,0.04))")
+                            property("background", primaryChartGradient)
                             property("clip-path", "polygon(0% 93%, 12% 87%, 25% 74%, 37% 58%, 50% 42%, 62% 28%, 75% 15%, 87% 8%, 100% 3%, 100% 100%, 0% 100%)")
                         }
                 )
-                // Blue line stroke (thin strip along top edge of blue area)
+                // Primary line stroke (thin strip along top edge of area)
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(175.px)
                         .styleModifier {
-                            property("background", "rgb(79,120,244)")
+                            property("background", primaryChartStroke)
                             property("clip-path", "polygon(0% 93%, 12% 87%, 25% 74%, 37% 58%, 50% 42%, 62% 28%, 75% 15%, 87% 8%, 100% 3%, 100% 4.5%, 87% 9.5%, 75% 16.5%, 62% 29.5%, 50% 43.5%, 37% 59.5%, 25% 75.5%, 12% 88.5%, 0% 94.5%)")
                         }
                 )
@@ -593,9 +617,9 @@ private fun QuickTasksPanel(modifier: Modifier) {
 
     Column(
         modifier = modifier
-            .backgroundColor(CardBg)
+            .backgroundColor(Theme.White.toColorMode())
             .borderRadius(12.px)
-            .border(width = 1.px, style = LineStyle.Solid, color = BorderColor)
+            .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
             .padding(all = 20.px)
     ) {
         // Header + tabs
@@ -607,7 +631,7 @@ private fun QuickTasksPanel(modifier: Modifier) {
             SpanText(
                 text = "Quick Tasks",
                 modifier = Modifier
-                    .color(WhiteText)
+                    .color(Theme.DarkCharcoal.toColorMode())
                     .fontSize(16.px)
                     .fontWeight(FontWeight.SemiBold)
                     .fontFamily(FONT_FAMILY)
@@ -624,7 +648,7 @@ private fun QuickTasksPanel(modifier: Modifier) {
                         SpanText(
                             text = tab,
                             modifier = Modifier
-                                .color(if (activeTab == tab) PrimaryBlue else MutedText)
+                                .color(if (activeTab == tab) Theme.Primary.toColorMode() else Theme.TextGray.toColorMode())
                                 .fontSize(13.px)
                                 .fontFamily(FONT_FAMILY)
                                 .fontWeight(if (activeTab == tab) FontWeight.SemiBold else FontWeight.Normal)
@@ -634,7 +658,7 @@ private fun QuickTasksPanel(modifier: Modifier) {
                                 modifier = Modifier
                                     .width(32.px)
                                     .height(2.px)
-                                    .backgroundColor(PrimaryBlue)
+                                    .backgroundColor(Theme.Primary.toColorMode())
                                     .margin(top = 4.px)
                             )
                         }
@@ -653,10 +677,10 @@ private fun QuickTasksPanel(modifier: Modifier) {
                 attrs = Modifier
                     .weight(1f)
                     .height(40.px)
-                    .backgroundColor(InputBg)
-                    .color(WhiteText)
+                    .backgroundColor(Theme.LightGray.toColorMode())
+                    .color(Theme.DarkCharcoal.toColorMode())
                     .borderRadius(8.px)
-                    .border(width = 1.px, style = LineStyle.Solid, color = BorderColor)
+                    .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
                     .outline(width = 0.px, style = LineStyle.None, color = Colors.Transparent)
                     .padding(leftRight = 14.px)
                     .fontFamily(FONT_FAMILY)
@@ -666,8 +690,8 @@ private fun QuickTasksPanel(modifier: Modifier) {
             Button(
                 attrs = Modifier
                     .height(40.px)
-                    .backgroundColor(PrimaryBlue)
-                    .color(WhiteText)
+                    .backgroundColor(Theme.Primary.toColorMode())
+                    .color(Colors.White)
                     .borderRadius(8.px)
                     .border(width = 0.px, style = LineStyle.None, color = Colors.Transparent)
                     .outline(width = 0.px, style = LineStyle.None, color = Colors.Transparent)
@@ -678,7 +702,7 @@ private fun QuickTasksPanel(modifier: Modifier) {
                     .cursor(Cursor.Pointer)
                     .toAttrs()
             ) {
-                SpanText("ADD", modifier = Modifier.color(WhiteText).fontFamily(FONT_FAMILY))
+                SpanText("ADD", modifier = Modifier.color(Colors.White).fontFamily(FONT_FAMILY))
             }
         }
 
@@ -707,14 +731,14 @@ private fun TaskRow(task: TaskItemData) {
                 .border(
                     width = 2.px,
                     style = LineStyle.Solid,
-                    color = if (task.done) RedAccent else BorderColor
+                    color = if (task.done) RedAccent else Theme.TextDarkGray.toColorMode()
                 )
                 .backgroundColor(if (task.done) RedAccent else Colors.Transparent)
                 .cursor(Cursor.Pointer),
             contentAlignment = Alignment.Center
         ) {
             if (task.done) {
-                SpanText("✓", modifier = Modifier.color(WhiteText).fontSize(11.px))
+                SpanText("✓", modifier = Modifier.color(Colors.White).fontSize(11.px))
             }
         }
         // Task text + badge
@@ -722,7 +746,7 @@ private fun TaskRow(task: TaskItemData) {
             SpanText(
                 text = task.text,
                 modifier = Modifier
-                    .color(if (task.done) MutedText else WhiteText)
+                    .color(if (task.done) Theme.TextGray.toColorMode() else Theme.DarkCharcoal.toColorMode())
                     .fontSize(13.px)
                     .fontFamily(FONT_FAMILY)
                     .let { if (task.done) it.textDecorationLine(TextDecorationLine.LineThrough) else it }
@@ -739,7 +763,7 @@ private fun TaskRow(task: TaskItemData) {
                     SpanText(
                         text = task.badge,
                         modifier = Modifier
-                            .color(WhiteText)
+                            .color(Colors.White)
                             .fontSize(10.px)
                             .fontFamily(FONT_FAMILY)
                             .fontWeight(FontWeight.Medium)

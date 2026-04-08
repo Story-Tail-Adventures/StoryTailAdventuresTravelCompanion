@@ -122,7 +122,7 @@ val MyStyle = CssStyle {
         Modifier.backgroundColor(Theme.White.rgb)
             .transition(Transition.of("color", 300.ms))
     }
-    hover { Modifier.color(Theme.AccentBlue.rgb) }
+    hover { Modifier.color(Theme.Primary.rgb) }
 }
 ```
 

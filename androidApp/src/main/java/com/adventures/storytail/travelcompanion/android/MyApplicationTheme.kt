@@ -22,15 +22,35 @@ fun MyApplicationTheme(
 ) {
     val colors = if (darkTheme) {
         darkColorScheme(
-            primary = Color(0xFFBB86FC),
-            secondary = Color(0xFF03DAC5),
-            tertiary = Color(0xFF3700B3)
+            primary = Color(0xFFE8A68C),
+            onPrimary = Color(0xFF4A0E0E),
+            primaryContainer = Color(0xFF5B0E0E),
+            onPrimaryContainer = Color(0xFFFFDAD4),
+            secondary = Color(0xFFFFBB6B),
+            onSecondary = Color(0xFF4A2800),
+            secondaryContainer = Color(0xFF6B3D00),
+            onSecondaryContainer = Color(0xFFFFDDB5),
+            tertiary = Color(0xFFD4BFA8),
+            background = Color(0xFF1A1110),
+            onBackground = Color(0xFFF5DFDA),
+            surface = Color(0xFF1A1110),
+            onSurface = Color(0xFFF5DFDA),
         )
     } else {
         lightColorScheme(
-            primary = Color(0xFF6200EE),
-            secondary = Color(0xFF03DAC5),
-            tertiary = Color(0xFF3700B3)
+            primary = Color(0xFF7B1A1A),
+            onPrimary = Color(0xFFFFFFFF),
+            primaryContainer = Color(0xFFFFDAD4),
+            onPrimaryContainer = Color(0xFF3B0907),
+            secondary = Color(0xFFF6931D),
+            onSecondary = Color(0xFFFFFFFF),
+            secondaryContainer = Color(0xFFFFF0E0),
+            onSecondaryContainer = Color(0xFF5D3A00),
+            tertiary = Color(0xFF6B5D55),
+            background = Color(0xFFFFFAF5),
+            onBackground = Color(0xFF2D2926),
+            surface = Color(0xFFFFFAF5),
+            onSurface = Color(0xFF2D2926),
         )
     }
     val typography = Typography(
