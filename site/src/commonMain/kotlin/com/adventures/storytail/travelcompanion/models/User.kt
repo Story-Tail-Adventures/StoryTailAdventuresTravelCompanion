@@ -10,7 +10,7 @@ expect class User {
 }
 
 
-expect class UserWithOutPassword {
+expect class UserWithoutPassword {
     val id: String
     val username: String
 }

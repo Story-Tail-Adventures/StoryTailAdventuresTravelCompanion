@@ -71,7 +71,7 @@ fun LoginScreen() {
                 description = "Logo"
             )
             Input(
-                type = InputType.Text,
+                type = InputType.Email,
                 attrs = LoginInputStyle.toModifier()
                     .id(Id.usernameInput)
                     .margin(bottom = 12.px)
@@ -82,7 +82,7 @@ fun LoginScreen() {
                     .padding(leftRight = 20.px)
                     .backgroundColor(Colors.White)
                     .toAttrs{
-                        placeholder("Username")
+                        placeholder("Email")
                     }
             )
             Input(

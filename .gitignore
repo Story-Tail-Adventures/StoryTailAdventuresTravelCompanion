@@ -21,3 +21,6 @@ captures
 .cxx
 local.properties
 xcuserdata
+
+.env
+.claude/settings.local.json

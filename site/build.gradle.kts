@@ -14,13 +14,17 @@ version = version.toString()
 kobweb {
     app {
         index {
-            description.set("Powered by Kobweb")
+            description.set("Story Tail Adventures Travel Companion")
         }
     }
 }
 
 kotlin {
     configAsKobwebApplication("storytail-adventures-travel-companion", includeServer = true)
+
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
 
     sourceSets {
         commonMain.dependencies {
@@ -38,7 +42,10 @@ kotlin {
         }
         jvmMain.dependencies {
             compileOnly(libs.kobweb.api) // Provided by Kobweb backend at runtime
-            implementation(libs.kmongo.database)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.cio)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.kotlinx.serialization)
         }
     }
