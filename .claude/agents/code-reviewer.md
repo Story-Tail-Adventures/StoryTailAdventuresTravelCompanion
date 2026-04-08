@@ -19,7 +19,7 @@ Root
 └── site/           Kobweb web app (jsMain frontend + jvmMain backend)
 ```
 
-Key technologies: Kotlin 2.0.21, Jetpack Compose 1.7.3, Kobweb 0.19.2, Ktor 2.3.12, Supabase Auth, kotlinx.serialization.
+Key technologies: Kotlin 2.0.21, Jetpack Compose 1.7.5, Kobweb 0.19.2, Ktor 2.3.12, Supabase Auth, kotlinx.serialization.
 
 ## Review Process
 
