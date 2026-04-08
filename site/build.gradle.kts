@@ -32,6 +32,10 @@ kotlin {
             implementation(libs.kotlinx.serialization)
         }
 
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+        }
+
         jsMain.dependencies {
             implementation(libs.compose.html.core)
             implementation(libs.kobweb.core)
