@@ -25,6 +25,7 @@ import com.varabyte.kobweb.compose.ui.modifiers.border
 import com.varabyte.kobweb.compose.ui.modifiers.color
 import com.varabyte.kobweb.compose.ui.modifiers.cursor
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
+import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
 import com.varabyte.kobweb.compose.ui.modifiers.fontFamily
 import com.varabyte.kobweb.compose.ui.modifiers.fontSize
 import com.varabyte.kobweb.compose.ui.modifiers.fontWeight
@@ -34,11 +35,15 @@ import com.varabyte.kobweb.compose.ui.modifiers.margin
 import com.varabyte.kobweb.compose.ui.modifiers.onClick
 import com.varabyte.kobweb.compose.ui.modifiers.outline
 import com.varabyte.kobweb.compose.ui.modifiers.padding
+import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.modifiers.textAlign
 import com.varabyte.kobweb.compose.ui.modifiers.width
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.Page
 import com.varabyte.kobweb.silk.components.graphics.Image
+import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
+import com.varabyte.kobweb.silk.components.icons.fa.FaSun
+import com.varabyte.kobweb.silk.components.icons.fa.IconSize
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.components.text.SpanText
@@ -54,10 +59,31 @@ import org.jetbrains.compose.web.dom.Input
 fun LoginScreen() {
 
     var errorText by remember { mutableStateOf("") }
-    Box(
-        Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ){
+    var colorMode by ColorMode.currentState
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        // Dark/Light mode toggle
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(all = 16.px),
+            horizontalArrangement = Arrangement.End
+        ) {
+            Box(
+                modifier = Modifier
+                    .color(Theme.DarkCharcoal.toColorMode())
+                    .cursor(Cursor.Pointer)
+                    .onClick { colorMode = colorMode.opposite }
+            ) {
+                if (colorMode.isLight) FaMoon(size = IconSize.LG)
+                else FaSun(size = IconSize.LG)
+            }
+        }
+        Box(
+            Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ){
         Column(
             modifier = Modifier
                 .padding(leftRight = 50.px, top = 80.px, bottom = 24.px)
@@ -134,6 +160,7 @@ fun LoginScreen() {
                     .textAlign(TextAlign.Center),
                 text = errorText
             )
+        }
         }
     }
 }

@@ -72,6 +72,12 @@ enum class Theme(
         darkHex = "#1E2328",
         darkRgb = rgb(30, 35, 40)
     ),
+    Border(
+        hex = "#E6DCD2",
+        rgb = rgb(230, 220, 210),
+        darkHex = "#2E3338",
+        darkRgb = rgb(46, 51, 56)
+    ),
 }
 
 @Composable

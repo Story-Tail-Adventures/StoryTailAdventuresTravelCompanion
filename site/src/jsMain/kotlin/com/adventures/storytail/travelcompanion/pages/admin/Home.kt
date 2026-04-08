@@ -159,7 +159,7 @@ private fun TopNavBar() {
             .fillMaxWidth()
             .height(60.px)
             .backgroundColor(Theme.White.toColorMode())
-            .border(width = 1.px, style = LineStyle.Solid, color = Theme.TextDarkGray.toColorMode())
+            .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
             .padding(leftRight = 20.px),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -192,7 +192,7 @@ private fun TopNavBar() {
                     .height(38.px)
                     .backgroundColor(Theme.LightGray.toColorMode())
                     .borderRadius(8.px)
-                    .border(width = 1.px, style = LineStyle.Solid, color = Theme.TextDarkGray.toColorMode())
+                    .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
                     .padding(leftRight = 14.px),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -228,7 +228,7 @@ private fun TopNavBar() {
                     .height(36.px)
                     .backgroundColor(Theme.LightGray.toColorMode())
                     .borderRadius(8.px)
-                    .border(width = 1.px, style = LineStyle.Solid, color = Theme.TextDarkGray.toColorMode())
+                    .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
                     .cursor(Cursor.Pointer),
                 contentAlignment = Alignment.Center
             ) {
@@ -241,7 +241,7 @@ private fun TopNavBar() {
                     .height(36.px)
                     .backgroundColor(Theme.LightGray.toColorMode())
                     .borderRadius(8.px)
-                    .border(width = 1.px, style = LineStyle.Solid, color = Theme.TextDarkGray.toColorMode())
+                    .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
                     .color(Theme.DarkCharcoal.toColorMode())
                     .cursor(Cursor.Pointer)
                     .onClick { colorMode = colorMode.opposite },
@@ -279,7 +279,7 @@ private fun AdminSidebar() {
             .width(240.px)
             .minHeight(100.vh)
             .backgroundColor(Theme.White.toColorMode())
-            .border(width = 1.px, style = LineStyle.Solid, color = Theme.TextDarkGray.toColorMode())
+            .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
             .padding(top = 12.px, bottom = 24.px)
             .overflow(Overflow.Hidden)
     ) {
@@ -390,7 +390,7 @@ private fun DashboardContent() {
             modifier = Modifier
                 .backgroundColor(Theme.White.toColorMode())
                 .borderRadius(8.px)
-                .border(width = 1.px, style = LineStyle.Solid, color = Theme.TextDarkGray.toColorMode())
+                .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
                 .padding(all = 4.px)
         ) {
             listOf("Today", "Week", "Month").forEach { label ->
@@ -441,7 +441,7 @@ private fun StatCard(modifier: Modifier, card: StatCardData) {
         modifier = modifier
             .backgroundColor(Theme.White.toColorMode())
             .borderRadius(12.px)
-            .border(width = 1.px, style = LineStyle.Solid, color = Theme.TextDarkGray.toColorMode())
+            .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
             .padding(all = 20.px)
     ) {
         Row(
@@ -494,7 +494,7 @@ private fun BookingAnalyticsPanel(modifier: Modifier) {
         modifier = modifier
             .backgroundColor(Theme.White.toColorMode())
             .borderRadius(12.px)
-            .border(width = 1.px, style = LineStyle.Solid, color = Theme.TextDarkGray.toColorMode())
+            .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
             .padding(all = 20.px)
     ) {
         // Panel header
@@ -550,27 +550,37 @@ private fun BookingAnalyticsPanel(modifier: Modifier) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(1.px)
-                                .backgroundColor(Theme.TextDarkGray.toColorMode())
+                                .backgroundColor(Theme.Border.toColorMode())
                         )
                     }
                 }
-                // Blue area chart (clip-path polygon approximates a rising curve)
+                // Primary area chart (clip-path polygon approximates a rising curve)
+                val primaryChartGradient = if (ColorMode.current.isLight) {
+                    "linear-gradient(to bottom, rgba(123,26,26,0.28), rgba(123,26,26,0.04))"
+                } else {
+                    "linear-gradient(to bottom, rgba(232,135,42,0.28), rgba(232,135,42,0.04))"
+                }
+                val primaryChartStroke = if (ColorMode.current.isLight) {
+                    "rgb(123,26,26)"
+                } else {
+                    "rgb(232,135,42)"
+                }
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(175.px)
                         .styleModifier {
-                            property("background", "linear-gradient(to bottom, rgba(123,26,26,0.28), rgba(123,26,26,0.04))")
+                            property("background", primaryChartGradient)
                             property("clip-path", "polygon(0% 93%, 12% 87%, 25% 74%, 37% 58%, 50% 42%, 62% 28%, 75% 15%, 87% 8%, 100% 3%, 100% 100%, 0% 100%)")
                         }
                 )
-                // Blue line stroke (thin strip along top edge of blue area)
+                // Primary line stroke (thin strip along top edge of area)
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(175.px)
                         .styleModifier {
-                            property("background", "rgb(123,26,26)")
+                            property("background", primaryChartStroke)
                             property("clip-path", "polygon(0% 93%, 12% 87%, 25% 74%, 37% 58%, 50% 42%, 62% 28%, 75% 15%, 87% 8%, 100% 3%, 100% 4.5%, 87% 9.5%, 75% 16.5%, 62% 29.5%, 50% 43.5%, 37% 59.5%, 25% 75.5%, 12% 88.5%, 0% 94.5%)")
                         }
                 )
@@ -608,7 +618,7 @@ private fun QuickTasksPanel(modifier: Modifier) {
         modifier = modifier
             .backgroundColor(Theme.White.toColorMode())
             .borderRadius(12.px)
-            .border(width = 1.px, style = LineStyle.Solid, color = Theme.TextDarkGray.toColorMode())
+            .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
             .padding(all = 20.px)
     ) {
         // Header + tabs
@@ -669,7 +679,7 @@ private fun QuickTasksPanel(modifier: Modifier) {
                     .backgroundColor(Theme.LightGray.toColorMode())
                     .color(Theme.DarkCharcoal.toColorMode())
                     .borderRadius(8.px)
-                    .border(width = 1.px, style = LineStyle.Solid, color = Theme.TextDarkGray.toColorMode())
+                    .border(width = 1.px, style = LineStyle.Solid, color = Theme.Border.toColorMode())
                     .outline(width = 0.px, style = LineStyle.None, color = Colors.Transparent)
                     .padding(leftRight = 14.px)
                     .fontFamily(FONT_FAMILY)
