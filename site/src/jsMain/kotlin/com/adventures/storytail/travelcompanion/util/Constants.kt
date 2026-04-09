@@ -4,6 +4,7 @@ object Constants {
     const val FONT_FAMILY = "Roboto"
     const val FONT_FAMILY_HEADING = "Raleway"
     const val FONT_FAMILY_BODY = "Mulish"
+    const val AUTH_TOKEN_KEY = "auth_token"
 }
 
 object Res {

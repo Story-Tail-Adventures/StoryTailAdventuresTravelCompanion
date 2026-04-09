@@ -51,6 +51,16 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.kotlinx.serialization)
+            implementation(libs.dotenv.kotlin)
+        }
+        jvmTest.dependencies {
+            implementation(libs.ktor.client.mock)
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.mockk)
+            implementation(libs.kobweb.api)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.kotlinx.serialization)
         }
     }
 }

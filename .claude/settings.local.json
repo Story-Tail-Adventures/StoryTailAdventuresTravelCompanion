@@ -13,7 +13,15 @@
       "Bash(pgrep:*)",
       "Bash(jar tf:*)",
       "Bash(jar xf:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(claude mcp:*)",
+      "Read(//tmp/jsMain/com/varabyte/kobweb/browser/**)",
+      "Read(//tmp/jsMain/com/varabyte/kobweb/core/**)",
+      "Read(//private/tmp/**)",
+      "Read(//tmp/com/varabyte/kobweb/api/http/**)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
 }
