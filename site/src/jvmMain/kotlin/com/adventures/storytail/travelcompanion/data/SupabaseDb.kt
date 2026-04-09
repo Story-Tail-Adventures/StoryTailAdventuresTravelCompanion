@@ -1,6 +1,7 @@
 package com.adventures.storytail.travelcompanion.data
 
 import com.adventures.storytail.travelcompanion.models.AuthResponse
+import io.github.cdimascio.dotenv.dotenv
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
@@ -18,18 +19,30 @@ fun initSupabase(context: InitApiContext) {
     context.data.add(SupabaseDb(context))
 }
 
-class SupabaseDb(private val context: InitApiContext) : UserRepository {
+class SupabaseDb(
+    private val context: InitApiContext,
+    supabaseUrl: String? = null,
+    supabaseKey: String? = null,
+    client: HttpClient? = null
+) : UserRepository {
 
-    private val supabaseUrl = System.getenv("SUPABASE_URL")
-    private val supabaseKey = System.getenv("SUPABASE_KEY")
+    private val env = dotenv {
+        directory = "../"
+        ignoreIfMissing = true
+    }
+
+    private val resolvedUrl = supabaseUrl ?: env["SUPABASE_URL"]
+    private val resolvedKey = supabaseKey ?: env["SUPABASE_KEY"]
 
     init {
-        if (supabaseUrl.isNullOrBlank() || supabaseKey.isNullOrBlank()) {
+        if (resolvedUrl.isNullOrBlank() || resolvedKey.isNullOrBlank()) {
             context.logger.warn("SUPABASE_URL or SUPABASE_KEY is not set. Auth will not work.")
+        } else {
+            context.logger.info("Supabase configuration loaded successfully.")
         }
     }
 
-    private val client = HttpClient(CIO) {
+    private val client = client ?: HttpClient(CIO) {
         install(ContentNegotiation) {
             json(Json {
                 ignoreUnknownKeys = true
@@ -39,14 +52,14 @@ class SupabaseDb(private val context: InitApiContext) : UserRepository {
     }
 
     override suspend fun signIn(email: String, password: String): AuthResponse? {
-        if (supabaseUrl.isNullOrBlank() || supabaseKey.isNullOrBlank()) {
+        if (resolvedUrl.isNullOrBlank() || resolvedKey.isNullOrBlank()) {
             context.logger.error("Supabase is not configured. Cannot sign in.")
             return null
         }
         return try {
-            val response = client.post("$supabaseUrl/auth/v1/token?grant_type=password") {
-                header("apikey", supabaseKey)
-                header("Authorization", "Bearer $supabaseKey")
+            val response = client.post("$resolvedUrl/auth/v1/token?grant_type=password") {
+                header("apikey", resolvedKey)
+                header("Authorization", "Bearer $resolvedKey")
                 contentType(ContentType.Application.Json)
                 setBody(mapOf("email" to email, "password" to password))
             }
