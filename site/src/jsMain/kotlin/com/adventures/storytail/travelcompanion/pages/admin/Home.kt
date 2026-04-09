@@ -1,6 +1,7 @@
 package com.adventures.storytail.travelcompanion.pages.admin
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,8 +45,11 @@ import com.varabyte.kobweb.compose.ui.modifiers.overflow
 import com.varabyte.kobweb.compose.ui.modifiers.padding
 import com.varabyte.kobweb.compose.ui.modifiers.width
 import com.varabyte.kobweb.compose.ui.toAttrs
+import com.adventures.storytail.travelcompanion.util.Constants.AUTH_TOKEN_KEY
 import com.varabyte.kobweb.core.Page
+import com.varabyte.kobweb.core.rememberPageContext
 import com.varabyte.kobweb.silk.components.graphics.Image
+import kotlinx.browser.window
 import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
 import com.varabyte.kobweb.silk.components.icons.fa.FaSun
 import com.varabyte.kobweb.silk.components.icons.fa.IconSize
@@ -129,6 +133,20 @@ private val sampleTasks = listOf(
 @Page
 @Composable
 fun HomePage() {
+    val ctx = rememberPageContext()
+    var isAuthenticated by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        val token = window.localStorage.getItem(AUTH_TOKEN_KEY)
+        if (token.isNullOrBlank()) {
+            ctx.router.navigateTo("/admin/login")
+        } else {
+            isAuthenticated = true
+        }
+    }
+
+    if (!isAuthenticated) return
+
     Column(
         modifier = Modifier
             .fillMaxSize()
